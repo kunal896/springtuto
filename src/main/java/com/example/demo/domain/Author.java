@@ -50,5 +50,16 @@ public class Author {
         this.books = books;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
 
+        Author author = (Author) o;
+        return getId() == author.getId();
+    }
+
+    @Override
+    public int hashCode() {
+        return getId();
+    }
 }
