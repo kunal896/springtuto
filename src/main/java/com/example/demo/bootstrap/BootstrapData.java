@@ -33,6 +33,10 @@ public class BootstrapData implements CommandLineRunner {
         Author suchiSaved = authorRepository.save(suchi);
         Book suchikenSaved = bookRepository.save(suchiken);
 
+
+        authorRepository.save(kunalSaved);
+        authorRepository.save(suchiSaved);
+
         suchiSaved.getBooks().add(suchiken);
 
     }
