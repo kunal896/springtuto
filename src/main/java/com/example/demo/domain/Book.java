@@ -58,4 +58,14 @@ public class Book {
     public int hashCode() {
         return getId();
     }
+
+
+    @Override
+    public String toString() {
+        return "Book{" +
+                "id=" + id +
+                ", title='" + title + '\'' +
+                ", authors=" + authors +
+                '}';
+    }
 }

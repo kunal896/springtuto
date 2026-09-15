@@ -64,6 +64,9 @@ public class BootstrapData implements CommandLineRunner {
         Publisher Amazon = new Publisher();
         Publisher Flipkart = new Publisher();
 
+        Amazon.setPublisherName("Amazon.com");
+        Flipkart.setPublisherName("Flipppppppkart.com");
+
         Publisher savedAmazon = publisherRepository.save(Amazon);
         Publisher savedFlipkart = publisherRepository.save(Flipkart);
 
