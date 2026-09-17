@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Spring project - book list</title>
+</head>
+<body>
+        <h1>Boook List</h1>
+
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>PublisherName</th>
+            </tr>
+
+            <tr th:each="book : ${books}">
+                <th th:text="${book.id}">123</th>
+                <th th:text="${book.title}">sampletitle</th>
+                <th th:text="${book.publisher.publisherName}">samplepublisher</th>
+            </tr>
+
+        </table>
+
+</body>
+</html>
