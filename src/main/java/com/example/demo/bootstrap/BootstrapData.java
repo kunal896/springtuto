@@ -15,6 +15,7 @@ public class BootstrapData implements CommandLineRunner {
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final PublisherRepository publisherRepository;
+
     public BootstrapData(AuthorRepository authorRepository, BookRepository bookRepository, PublisherRepository publisherRepository) {
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
@@ -24,17 +25,16 @@ public class BootstrapData implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         System.out.println("Inside bootstrap overrriden run method.");
-        Author Kunal = new Author();
-        Kunal.setFirstName("Kunal");
-        Kunal.setLastName("Natesh");
 
-        Book kuna_book = new Book();
-        kuna_book.setTitle("Kunal's Book");
+        Author kunal = new Author();
+        kunal.setFirstName("Kunal");
+        kunal.setLastName("Natesh");
 
-        Author kunalSaved = authorRepository.save(Kunal);
-        Book kunaBookSaved = bookRepository.save(kuna_book);
+        Book kunaBook = new Book();
+        kunaBook.setTitle("Kunal's Book");
 
-        kunalSaved.getBooks().add(kunaBookSaved);
+        Author kunalSaved = authorRepository.save(kunal);
+        Book kunaBookSaved = bookRepository.save(kunaBook);
 
         Author suchi = new Author();
         suchi.setFirstName("Suchi");
@@ -46,31 +46,28 @@ public class BootstrapData implements CommandLineRunner {
         Author suchiSaved = authorRepository.save(suchi);
         Book suchikenSaved = bookRepository.save(suchiken);
 
+        Publisher amazon = new Publisher();
+        Publisher flipkart = new Publisher();
 
+        amazon.setPublisherName("Amazon.com");
+        flipkart.setPublisherName("Flipkart.com");
 
-        suchiSaved.getBooks().add(suchiken);
-        kunaBookSaved.getAuthors().add(Kunal);
-        suchikenSaved.getAuthors().add(suchi);
+        Publisher savedAmazon = publisherRepository.save(amazon);
+        Publisher savedFlipkart = publisherRepository.save(flipkart);
 
-        authorRepository.save(kunalSaved);
-        authorRepository.save(suchiSaved);
+        // Book owns the relationship (has @JoinTable), so only this side needs updating.
+        // All mutations happen before a single save per book to avoid re-inserting
+        // the join table row on a second flush.
+        kunaBookSaved.getAuthors().add(kunalSaved);
+        kunaBookSaved.setPublisher(savedAmazon);
         bookRepository.save(kunaBookSaved);
+
+        suchikenSaved.getAuthors().add(suchiSaved);
+        suchikenSaved.setPublisher(savedFlipkart);
         bookRepository.save(suchikenSaved);
 
         System.out.println("Authors: " + authorRepository.count());
         System.out.println("Books: " + bookRepository.count());
-
-
-        Publisher Amazon = new Publisher();
-        Publisher Flipkart = new Publisher();
-
-        Amazon.setPublisherName("Amazon.com");
-        Flipkart.setPublisherName("Flipppppppkart.com");
-
-        Publisher savedAmazon = publisherRepository.save(Amazon);
-        Publisher savedFlipkart = publisherRepository.save(Flipkart);
-
-        System.out.println("Publishers: " + authorRepository.count());
-
+        System.out.println("Publishers: " + publisherRepository.count());
     }
 }
