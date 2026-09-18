@@ -7,6 +7,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class AuthorController {
@@ -30,7 +31,18 @@ public class AuthorController {
     }
 
     @PostMapping("/authors")
-    public String createAuthor(Author author){
-        return null;
+    public String createAuthor(Author author, RedirectAttributes redirectAttributes){
+
+        redirectAttributes.addFlashAttribute("savedAuthor", author);
+
+        authorService.save(author);
+
+        return "redirect:/authorCreateSucess";
     }
+
+    @GetMapping("/authorCreateSucess")
+    public String successPage(Model model){
+        return "authorCreateSuccess";
+    }
+
 }

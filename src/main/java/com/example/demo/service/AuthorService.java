@@ -5,4 +5,7 @@ import com.example.demo.domain.Author;
 public interface AuthorService {
 
     Iterable<Author> findAll();
+
+
+    void save(Author author);
 }

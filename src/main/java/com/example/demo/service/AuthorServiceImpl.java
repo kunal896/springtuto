@@ -3,7 +3,6 @@ package com.example.demo.service;
 import com.example.demo.domain.Author;
 import com.example.demo.repository.AuthorRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 
 @Service
 public class AuthorServiceImpl implements AuthorService {
@@ -18,5 +17,10 @@ public class AuthorServiceImpl implements AuthorService {
     @Override
     public Iterable<Author> findAll() {
         return authorRepository.findAll();
+    }
+
+    @Override
+    public void save(Author author){
+        authorRepository.save(author);
     }
 }
